@@ -35,9 +35,9 @@ public class ProjetoGame {
         Main janelaMain = new Main();
         EscolherTime janelaTime = new EscolherTime();
             
-        janelaTime.setLocationRelativeTo(null);
+        janelaMain.setLocationRelativeTo(null);
         janelaMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janelaTime.setVisible(true);
+        janelaMain.setVisible(true);
         //janelaTime.setExtendedState(JFrame.MAXIMIZED_BOTH);
        
         ResultSet resultSet = null;
@@ -105,9 +105,7 @@ public class ProjetoGame {
                 }
             }
         };
-        
         timer.scheduleAtFixedRate(task, segPlayers, segPlayers);
-        
         
         TimerTask task2 = new TimerTask() {
             int  k = 1;
@@ -148,7 +146,6 @@ public class ProjetoGame {
                 }  
             }
         };
-        
         timer.scheduleAtFixedRate(task2, segAdversarios, segAdversarios);
         
         
