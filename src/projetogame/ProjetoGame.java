@@ -38,7 +38,6 @@ public class ProjetoGame {
         janelaMain.setLocationRelativeTo(null);
         janelaMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janelaMain.setVisible(true);
-        //janelaTime.setExtendedState(JFrame.MAXIMIZED_BOTH);
        
         ResultSet resultSet = null;
         Statement statement = null;
@@ -50,7 +49,7 @@ public class ProjetoGame {
         Partidas partida = new Partidas();
         Times time = new Times();
         
-        time.selectTimes(conexaoSQLite, statement, resultSet, janelaTime);
+        
         int n = ler.nextInt();
         Map<String,Players> players = player.selectPlayers(conexaoSQLite, statement, resultSet, n);
         time.selectAdversario(conexaoSQLite, statement, resultSet, n);

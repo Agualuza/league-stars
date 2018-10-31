@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author user
  */
-public class Players extends Usuarios {
+public class Players extends Jogadores {
     private int idTime;
     private String nome;
     private int tipo;

@@ -5,6 +5,12 @@
  */
 package views;
 
+import conexoes.ConexaoSQLite;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import projetogame.Times;
+
 /**
  *
  * @author user
@@ -80,6 +86,17 @@ public class Main extends javax.swing.JFrame {
         this.setVisible(false);
         janelaTime.setLocationRelativeTo(null);
         janelaTime.setVisible(true); 
+        //janelaTime.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
+        Times time = new Times();
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement();
+        time.selectTimes(conexaoSQLite, statement, resultSet, janelaTime);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

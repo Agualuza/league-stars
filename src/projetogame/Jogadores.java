@@ -17,7 +17,7 @@ import java.util.Timer;
  *
  * @author user
  */
-public abstract class Usuarios implements CalculosUsuarios {
+public abstract class Jogadores implements CalculosUsuarios {
     private int idTime;
     private String nome;
     private int tipo;
