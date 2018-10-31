@@ -5,11 +5,19 @@
  */
 package projetogame;
 
+import conexoes.ConexaoSQLite;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+
 /**
  *
  * @author user
  */
-public class Player {
+public abstract class Usuarios implements CalculosUsuarios {
     private int idTime;
     private String nome;
     private int tipo;
@@ -18,7 +26,22 @@ public class Player {
     private int agilidade;
     private int inteligencia;
 
-
+    public long calculaTempo(float playersLambda,float adversariosLambda){
+        Poisson poisson = new Poisson();
+        
+        float p = playersLambda/adversariosLambda;
+        
+        float tempoPlayers = (float) (poisson.distribuicaoPoisson(p));
+       
+        long segPlayers = (long) (10000 * tempoPlayers );
+        
+        segPlayers = (long)((Math.random()*5)*segPlayers);
+        
+        
+        return segPlayers;
+        
+    }
+    
     /**
      * @return the idTime
      */
@@ -116,6 +139,4 @@ public class Player {
     public void setInteligencia(int inteligencia) {
         this.inteligencia = inteligencia;
     }
-    
-    
 }
