@@ -17,7 +17,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
 import views.EscolherTime;
-import views.Main;
+import views.Inicial;
 
 
 /**
@@ -32,12 +32,12 @@ public class ProjetoGame {
     public static void main(String[] args) {
         ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
         Scanner ler = new Scanner(System.in);
-        Main janelaMain = new Main();
+        Inicial janelaInicial = new Inicial();
         EscolherTime janelaTime = new EscolherTime();
             
-        janelaMain.setLocationRelativeTo(null);
-        janelaMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        janelaMain.setVisible(true);
+        janelaInicial.setLocationRelativeTo(null);
+        janelaInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        janelaInicial.setVisible(true);
        
         ResultSet resultSet = null;
         Statement statement = null;

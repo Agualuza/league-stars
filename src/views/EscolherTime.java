@@ -5,7 +5,10 @@
  */
 package views;
 
+import conexoes.ConexaoSQLite;
 import java.awt.List;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import projetogame.Players;
 import projetogame.Times;
+import projetogame.Treinadores;
 
 /**
  *
@@ -41,6 +45,7 @@ public class EscolherTime extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("League Stars");
@@ -57,7 +62,7 @@ public class EscolherTime extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 48)); // NOI18N
         jLabel1.setText("Escolha seu Time");
 
-        jTextField1.setText("Nome");
+        jLabel2.setText("Nome do Treinador:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +79,10 @@ public class EscolherTime extends javax.swing.JFrame {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(194, 194, 194))))
+                        .addGap(194, 194, 194))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(222, 222, 222))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,17 +92,43 @@ public class EscolherTime extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Treinadores treinador = new Treinadores();
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement();
+        String string = jList1.getSelectedValue();
+        String substring = string.substring(0,1);
+        int idTime = Integer.parseInt(substring);
+        String nome = jTextField1.getText();
+        String time = string.substring(2);
+        
+        treinador.setNome(nome);
+        treinador.setIdTime(idTime);
+        
+        treinador.createTreinador(conexaoSQLite, resultSet, treinador);
+        int idTreinador = treinador.selectTreinadorId(conexaoSQLite, statement, resultSet, idTime);
+        
+        Principal janelaPrincipal = new Principal();
+       
+        this.setVisible(false);
+        janelaPrincipal.setLocationRelativeTo(null);
+        janelaPrincipal.recebeDados(idTreinador);
+        janelaPrincipal.setVisible(true); 
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -148,6 +182,7 @@ public class EscolherTime extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;

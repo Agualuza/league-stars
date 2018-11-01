@@ -5,6 +5,12 @@
  */
 package projetogame;
 
+import conexoes.ConexaoSQLite;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author user
@@ -15,23 +21,91 @@ public class Treinadores {
    private int idTime;
    
    
-   public void createTreinador(){
+   public void createTreinador(ConexaoSQLite conexaoSQLite,ResultSet resultSet, Treinadores treinador) {
+       
+        
+        String query = "INSERT INTO treinadores ("
+                + "nome,"
+                + "idTime"
+                + ")"
+                + "VALUES(?,?)"
+                + ";";
+        
+        PreparedStatement preparedStatement = conexaoSQLite.criarPreparedStatement(query);
+        
+        
+        try {
+            preparedStatement.setString(1,treinador.getNome());
+            preparedStatement.setInt(2,treinador.getIdTime());
+            
+            
+            preparedStatement.executeUpdate();
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+    }
    
-   }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
+   public int selectTreinadorId(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+        String query = "SELECT * FROM treinadores WHERE idTime = "+idTime+" ORDER BY id DESC LIMIT 1";
+        int idTreinador = 0;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           idTreinador = resultSet.getInt("id"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+      
+        
+         return idTreinador;
+        
     }
+   
+   public String selectTreinadorNome(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTreinador){
+        String query = "SELECT * FROM treinadores WHERE id = "+idTreinador;
+        String treinador = null;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           treinador = resultSet.getString("nome"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+      
+        
+         return treinador;
+        
+    } 
+   
+   public int selectTreinadorIdTime(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTreinador){
+        String query = "SELECT * FROM treinadores WHERE id = "+idTreinador;
+        int idTime = 0;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           idTime = resultSet.getInt("idTime"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+      
+        
+         return idTime;
+        
+    } 
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
+
+       
+
 
     /**
      * @return the nome
@@ -59,5 +133,19 @@ public class Treinadores {
      */
     public void setIdTime(int idTime) {
         this.idTime = idTime;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

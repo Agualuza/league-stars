@@ -44,7 +44,7 @@ public class Partidas {
         } catch (SQLException e) {
              System.err.println(e.getMessage());
         } 
-    
+        
     }
     
     public void createPartidas(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet,int n , int m) {
@@ -75,8 +75,9 @@ public class Partidas {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        }
+        } 
     }
+    
     /**
      * @return the idTime1
      */

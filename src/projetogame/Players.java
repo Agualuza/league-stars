@@ -147,6 +147,22 @@ public class Players extends Jogadores {
     public int getTipo() {
         return tipo;
     }
+    
+    public String getPosicao(int tipoInt) {
+         String tipo = null;
+                if (tipoInt == 1) {
+                    tipo = "Topo";
+                } else if ( tipoInt == 2) {
+                    tipo = "Caçador";
+                } else if (tipoInt == 3) {
+                    tipo = "Meio";
+                } else if (tipoInt == 4) {
+                    tipo = "Atirador";
+                } else if (tipoInt == 5){
+                    tipo = "Suporte";
+                }
+         return tipo;
+    }
 
     /**
      * @param tipo the tipo to set

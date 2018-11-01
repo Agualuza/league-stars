@@ -24,6 +24,63 @@ public class Times {
    private String corTexto;
 
    
+   public String selectTimesNome(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+        String query = "SELECT * FROM times WHERE id = "+idTime;
+        String time = null;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           time = resultSet.getString("nome"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+        
+         return time;
+        
+    }
+   
+    public String selectTimesCorFundo(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+        String query = "SELECT * FROM times WHERE id = "+idTime;
+        String time = null;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           time = resultSet.getString("corFundo"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } 
+      
+        
+         return time;
+        
+    } 
+    
+     public String selectTimesCorTexto(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+        String query = "SELECT * FROM times WHERE id = "+idTime;
+        String time = null;
+        
+        try {
+           resultSet = statement.executeQuery(query);  
+        
+           time = resultSet.getString("corTexto"); 
+           
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        }  
+      
+        
+         return time;
+        
+    } 
+
+   
    public void selectAdversario(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int n) {
         String query = "SELECT * FROM times WHERE id !="
                 + n;
@@ -43,7 +100,7 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        } 
+        }  
         
    }
    
@@ -83,7 +140,6 @@ public class Times {
         } catch (SQLException e) {
              System.err.println(e.getMessage());
         } 
-        
    }
    
     /**

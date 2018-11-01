@@ -104,7 +104,7 @@ public class Adversarios extends Jogadores {
         } catch (SQLException e) {
              System.err.println(e.getMessage());
         } 
-        
+          
         return players;
         
     }
