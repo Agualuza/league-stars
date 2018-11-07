@@ -6,12 +6,19 @@
 package views;
 
 import conexoes.ConexaoSQLite;
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.List;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import projetogame.Players;
@@ -29,6 +36,10 @@ public class EscolherTime extends javax.swing.JFrame {
      */
     public EscolherTime() {
         initComponents();
+        String string = "#8895bd";
+        Color cor = Color.decode(string);
+        this.getContentPane().setBackground(cor);
+        
     }
 
     /**
@@ -68,21 +79,20 @@ public class EscolherTime extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(101, 101, 101))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(194, 194, 194))
+                        .addGap(118, 118, 118))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(222, 222, 222))))
+                        .addGap(151, 151, 151)))
+                .addGap(85, 85, 85))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,7 +107,7 @@ public class EscolherTime extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
@@ -105,11 +115,7 @@ public class EscolherTime extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Treinadores treinador = new Treinadores();
-        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
-        ResultSet resultSet = null;
-        Statement statement = null;
-        conexaoSQLite.conectar();
-        statement = conexaoSQLite.criarStatement();
+
         String string = jList1.getSelectedValue();
         String substring = string.substring(0,1);
         int idTime = Integer.parseInt(substring);
@@ -119,15 +125,16 @@ public class EscolherTime extends javax.swing.JFrame {
         treinador.setNome(nome);
         treinador.setIdTime(idTime);
         
-        treinador.createTreinador(conexaoSQLite, resultSet, treinador);
-        int idTreinador = treinador.selectTreinadorId(conexaoSQLite, statement, resultSet, idTime);
+        treinador.createTreinador(treinador);
+        int idTreinador = treinador.selectTreinadorId(idTime);
         
         Principal janelaPrincipal = new Principal();
        
         this.setVisible(false);
         janelaPrincipal.setLocationRelativeTo(null);
-        janelaPrincipal.recebeDados(idTreinador);
+        janelaPrincipal.recebeDados(idTreinador,1);
         janelaPrincipal.setVisible(true); 
+        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -9,9 +9,11 @@ import conexoes.ConexaoSQLite;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import views.EscolherTime;
+import java.util.List;
 
 /**
  *
@@ -22,10 +24,54 @@ public class Times {
    private String nome;
    private String corFundo;
    private String corTexto;
+   private int pontuacao;
+   private int flag;
+   
 
    
-   public String selectTimesNome(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
-        String query = "SELECT * FROM times WHERE id = "+idTime;
+    public List<Times> selectTimesPontuacao(int idTreinador){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+        
+        String query = "SELECT * FROM pontuacao where idTreinador = "+idTreinador;
+        List<Times> times = new ArrayList<>();
+        
+        try {
+          resultSet = statement.executeQuery(query); 
+          
+          while(resultSet.next()){
+           Times time = new Times();
+           time.setId(resultSet.getInt("idTime"));
+           time.setPontuacao(resultSet.getInt("pontos"));
+           times.add(time);
+          }
+         
+        } catch (SQLException e) {
+             System.err.println(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        } 
+        return times;
+    }
+    
+   
+   public String selectTimesNome(int idTime){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement();  
+       
+       String query = "SELECT * FROM times WHERE id = "+idTime;
         String time = null;
         
         try {
@@ -36,13 +82,27 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        } 
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         
          return time;
         
     }
    
-    public String selectTimesCorFundo(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+    public String selectTimesCorFundo(int idTime){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+        
         String query = "SELECT * FROM times WHERE id = "+idTime;
         String time = null;
         
@@ -54,14 +114,27 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        } 
-      
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         
          return time;
         
     } 
     
-     public String selectTimesCorTexto(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
+     public String selectTimesCorTexto(int idTime){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+         
         String query = "SELECT * FROM times WHERE id = "+idTime;
         String time = null;
         
@@ -73,15 +146,28 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        }  
-      
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         
          return time;
         
     } 
 
    
-   public void selectAdversario(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int n) {
+   public void selectAdversario(int n) {
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+        
         String query = "SELECT * FROM times WHERE id !="
                 + n;
        
@@ -100,11 +186,25 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        }  
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         
    }
    
-   public void selectTimes(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, EscolherTime janelaTime){
+   public void selectTimes(EscolherTime janelaTime){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+        
        String query = "SELECT * FROM times;";
        
         
@@ -139,7 +239,15 @@ public class Times {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        } 
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
    }
    
     /**
@@ -196,5 +304,33 @@ public class Times {
      */
     public void setCorTexto(String corTexto) {
         this.corTexto = corTexto;
+    }
+
+    /**
+     * @return the pontuacao
+     */
+    public int getPontuacao() {
+        return pontuacao;
+    }
+
+    /**
+     * @param pontuacao the pontuacao to set
+     */
+    public void setPontuacao(int pontuacao) {
+        this.pontuacao = pontuacao;
+    }
+
+    /**
+     * @return the flag
+     */
+    public int getFlag() {
+        return flag;
+    }
+
+    /**
+     * @param flag the flag to set
+     */
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

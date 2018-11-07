@@ -14,10 +14,10 @@ import java.util.Map;
  *
  * @author user
  */
-public interface CalculosUsuarios {
+public interface CalculosJogadores {
     public abstract float calculaLambda(Map<String,Players> players);
     
-    public abstract Map<String,Players> selectPlayers(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int n);
+    public abstract Map<String,Players> selectPlayers(int n);
 
     public abstract long calculaTempo(float playersLambda ,float adversariosLambda);
 }

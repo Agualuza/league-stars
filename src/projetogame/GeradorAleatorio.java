@@ -9,9 +9,8 @@ package projetogame;
  *
  * @author user
  */
-public class Poisson {
-    
-    public float distribuicaoPoisson(float lambda){
+public class GeradorAleatorio {
+     public float distribuicaoPoisson(float lambda){
         int k = 1;
         float resultado = (float) (Math.exp(-lambda)*Math.pow(lambda, k))/this.fatorial(k);
         return resultado;
@@ -24,5 +23,4 @@ public class Poisson {
         }
         return resultado;
     }
-    
 }

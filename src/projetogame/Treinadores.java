@@ -21,8 +21,10 @@ public class Treinadores {
    private int idTime;
    
    
-   public void createTreinador(ConexaoSQLite conexaoSQLite,ResultSet resultSet, Treinadores treinador) {
-       
+   public void createTreinador(Treinadores treinador) {
+       ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        conexaoSQLite.conectar();
+        
         
         String query = "INSERT INTO treinadores ("
                 + "nome,"
@@ -43,11 +45,23 @@ public class Treinadores {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
-        } 
+        } finally {
+            try {
+                preparedStatement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            } 
+        }
     }
    
-   public int selectTreinadorId(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTime){
-        String query = "SELECT * FROM treinadores WHERE idTime = "+idTime+" ORDER BY id DESC LIMIT 1";
+   public int selectTreinadorId(int idTime){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+       String query = "SELECT * FROM treinadores WHERE idTime = "+idTime+" ORDER BY id DESC LIMIT 1";
         int idTreinador = 0;
         
         try {
@@ -58,15 +72,27 @@ public class Treinadores {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         } 
-      
         
          return idTreinador;
         
     }
    
-   public String selectTreinadorNome(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTreinador){
-        String query = "SELECT * FROM treinadores WHERE id = "+idTreinador;
+   public String selectTreinadorNome(int idTreinador){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement(); 
+       String query = "SELECT * FROM treinadores WHERE id = "+idTreinador;
         String treinador = null;
         
         try {
@@ -77,14 +103,26 @@ public class Treinadores {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         } 
-      
         
          return treinador;
         
     } 
    
-   public int selectTreinadorIdTime(ConexaoSQLite conexaoSQLite, Statement statement, ResultSet resultSet, int idTreinador){
+   public int selectTreinadorIdTime(int idTreinador){
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        ResultSet resultSet = null;
+        Statement statement = null;
+        conexaoSQLite.conectar();
+        statement = conexaoSQLite.criarStatement();
         String query = "SELECT * FROM treinadores WHERE id = "+idTreinador;
         int idTime = 0;
         
@@ -96,8 +134,15 @@ public class Treinadores {
          
         } catch (SQLException e) {
              System.err.println(e.getMessage());
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                conexaoSQLite.desconectar();
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
         } 
-      
         
          return idTime;
         

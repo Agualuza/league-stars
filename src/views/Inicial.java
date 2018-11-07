@@ -6,9 +6,16 @@
 package views;
 
 import conexoes.ConexaoSQLite;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import projetogame.Dados;
 import projetogame.Times;
 
 /**
@@ -22,7 +29,13 @@ public class Inicial extends javax.swing.JFrame {
      */
     public Inicial() {
         initComponents();
+        String string = "#8895bd";
+        Color cor = Color.decode(string);
+        this.getContentPane().setBackground(cor);
+       
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,6 +65,11 @@ public class Inicial extends javax.swing.JFrame {
         });
 
         jButton2.setText("Jogos Salvos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,15 +107,21 @@ public class Inicial extends javax.swing.JFrame {
         //janelaTime.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         Times time = new Times();
-        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
-        
-        ResultSet resultSet = null;
-        Statement statement = null;
-        conexaoSQLite.conectar();
-        statement = conexaoSQLite.criarStatement();
-        time.selectTimes(conexaoSQLite, statement, resultSet, janelaTime);
+    
+        time.selectTimes(janelaTime);
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JogosSalvos janelaSalvos = new JogosSalvos();
+        janelaSalvos.setLocationRelativeTo(null);
+        Dados d = new Dados();
+        List<Dados> lista = d.selectTodosDados();
+        janelaSalvos.addLista(lista);
+        this.setVisible(false);
+        janelaSalvos.setVisible(true);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

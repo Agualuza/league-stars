@@ -17,7 +17,7 @@ import java.util.Timer;
  *
  * @author user
  */
-public abstract class Jogadores implements CalculosUsuarios {
+public abstract class Jogadores implements CalculosJogadores {
     private int idTime;
     private String nome;
     private int tipo;
@@ -27,11 +27,11 @@ public abstract class Jogadores implements CalculosUsuarios {
     private int inteligencia;
 
     public long calculaTempo(float playersLambda,float adversariosLambda){
-        Poisson poisson = new Poisson();
+        GeradorAleatorio gerador = new GeradorAleatorio();
         
         float p = playersLambda/adversariosLambda;
         
-        float tempoPlayers = (float) (poisson.distribuicaoPoisson(p));
+        float tempoPlayers = (float) (gerador.distribuicaoPoisson(p));
        
         long segPlayers = (long) (10000 * tempoPlayers );
         

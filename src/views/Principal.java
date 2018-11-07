@@ -7,11 +7,23 @@ package views;
 
 import conexoes.ConexaoSQLite;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableModel;
+import projetogame.Dados;
+import projetogame.Partidas;
 import projetogame.Players;
 import projetogame.Times;
 import projetogame.Treinadores;
@@ -21,14 +33,26 @@ import projetogame.Treinadores;
  * @author user
  */
 public class Principal extends javax.swing.JFrame {
-
+    
+    
+    ViewPartidas janelaPartidas = new ViewPartidas();
+    PartidasFinais janelaFinais = new PartidasFinais();
+    Partidas p = new Partidas();
+   
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        String string = "#8895bd";
+        Color cor = Color.decode(string);
+        this.getContentPane().setBackground(cor);
+        
+        
     }
-
+        
+        
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +66,15 @@ public class Principal extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,23 +112,68 @@ public class Principal extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("jLabel2");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Próxima Partida");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("jLabel4");
+
+        jButton1.setText("Jogar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("jLabel5");
+
+        jMenu1.setText("Campeonato");
+
+        jMenuItem1.setText("Classificação");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Configuração");
+
+        jMenuItem2.setText("Salvar Jogo");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
-                        .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(248, 248, 248))
+            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,11 +184,66 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+   
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       int rodada = p.getRodada();
+       
+       if(rodada > 7) {
+           this.setVisible(false);
+           janelaFinais.setLocationRelativeTo(null);
+           int idTime = p.getIdTime2();
+           int idTreinador = p.getIdTreinador();
+           janelaFinais.recebeDados(idTime,idTreinador,rodada);
+           janelaFinais.setVisible(true);
+       } else { 
+           this.setVisible(false);
+           janelaPartidas.setLocationRelativeTo(null);
+           int idTime = p.getIdTime1();
+           int idTreinador = p.getIdTreinador();
+           janelaPartidas.recebeDados(idTime,idTreinador,rodada);
+           janelaPartidas.setVisible(true);
+       }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Tabela janelaTabela = new Tabela();
+        janelaTabela.setLocationRelativeTo(null);
+        janelaTabela.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        int idTreinador = p.getIdTreinador();
+        janelaTabela.gerarTabela(idTreinador);
+        janelaTabela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        Dados d = new Dados();
+        Times time = new Times();
+        List<Times> listaTimes = time.selectTimesPontuacao(p.getIdTreinador());
+        Map<String,Times> dicionario = new HashMap<>();
+        
+        for (int i = 0; i < 8; i++) {
+            int id = listaTimes.get(i).getId();
+            String string = "time"+id;
+            dicionario.put(string, listaTimes.get(i));
+        }
+        
+        d.salvarGame(p.getIdTreinador(), p.getIdTime1(), p.getRodada(),dicionario.get("time1").getPontuacao(), dicionario.get("time2").getPontuacao(), dicionario.get("time3").getPontuacao(), dicionario.get("time4").getPontuacao(), dicionario.get("time5").getPontuacao(),dicionario.get("time6").getPontuacao(), dicionario.get("time7").getPontuacao(), dicionario.get("time8").getPontuacao());
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,32 +280,115 @@ public class Principal extends javax.swing.JFrame {
         });
     }
     
-    public void recebeDados(int idTreinador) {
+    public void recebeDados(int idTreinador,int rodada) {
+        
         Treinadores treinador = new Treinadores();
         Times time = new Times();
-        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
-        ResultSet resultSet = null;
-        Statement statement = null;
-        conexaoSQLite.conectar();
-        statement = conexaoSQLite.criarStatement();
+        Partidas partida = new Partidas();
         
-        String nomeTreinador = treinador.selectTreinadorNome(conexaoSQLite, statement, resultSet, idTreinador);
-        int idTime = treinador.selectTreinadorIdTime(conexaoSQLite, statement, resultSet, idTreinador);
-        String nomeTime = time.selectTimesNome(conexaoSQLite, statement, resultSet, idTime);
-        String corFundoTime = time.selectTimesCorFundo(conexaoSQLite, statement, resultSet, idTime);
-        String corTextoTime = time.selectTimesCorTexto(conexaoSQLite, statement, resultSet, idTime);
+        if (rodada == 1) {
+            for (int i = 1; i <= 8; i++) {
+                partida.createPontuacao(idTreinador, i);
+            }
+        }
+        
+        List<Times> listaTimes = time.selectTimesPontuacao(idTreinador);
+            Collections.sort (listaTimes, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Times t1 = (Times) o1;
+                Times t2 = (Times) o2;
+                return t1.getPontuacao() < t2.getPontuacao() ? +1 : (t1.getPontuacao() > t2.getPontuacao() ? -1 : 0);
+            }
+        });
+        
+  
+        
+        String nomeTreinador = treinador.selectTreinadorNome(idTreinador);
+        int idTime = treinador.selectTreinadorIdTime(idTreinador);
+        String nomeTime = time.selectTimesNome(idTime);
+        String corFundoTime = time.selectTimesCorFundo(idTime);
+        String corTextoTime = time.selectTimesCorTexto(idTime);
         
         Color corFundo = Color.decode(corFundoTime);
         Color corTexto = Color.decode(corTextoTime);
+        
+        partida = partida.selectPartidasByTime(idTime, 1, rodada);
+        Dados d = new Dados();
+        String nome1;
+        String nome2;
+        String stringRodada;
+        int aux = 0;
+        
+
+        if (rodada == 8) {
+            int temp = d.selectDadosByIdTreinador(idTreinador,8);
+            if (temp == 0){
+                partida.createFinais(idTreinador, listaTimes.get(3).getId(),listaTimes.get(4).getId() , rodada);
+            }
+            aux = listaTimes.get(3).getId();
+            nome1 = time.selectTimesNome(listaTimes.get(3).getId());
+            nome2 = time.selectTimesNome(listaTimes.get(4).getId());
+            stringRodada = "Oitavas de Finais";
+        } else if (rodada == 9) {
+            int temp = d.selectDadosByIdTreinador(idTreinador,9);
+            if (temp == 0){
+                partida.createFinais(idTreinador, listaTimes.get(2).getId(),d.selectDadosIdVencedor(idTreinador, rodada-1) , rodada);
+            }
+            aux = listaTimes.get(2).getId();
+            nome1 = time.selectTimesNome(listaTimes.get(2).getId());
+            nome2 = time.selectTimesNome(d.selectDadosIdVencedor(idTreinador, rodada-1));
+            stringRodada = "Quartas de Finais";
+        } else if (rodada == 10) {
+            int temp = d.selectDadosByIdTreinador(idTreinador,10);
+            if (temp == 0){
+                partida.createFinais(idTreinador, listaTimes.get(1).getId(),d.selectDadosIdVencedor(idTreinador, rodada-1) , rodada);
+            }
+            aux = listaTimes.get(1).getId();
+            nome1 = time.selectTimesNome(listaTimes.get(1).getId());
+            nome2 = time.selectTimesNome(d.selectDadosIdVencedor(idTreinador, rodada-1));
+            stringRodada = "Semi-Final";
+        } else if (rodada == 11) {
+            int temp = d.selectDadosByIdTreinador(idTreinador,11);
+            if (temp == 0){
+                partida.createFinais(idTreinador, listaTimes.get(0).getId(),d.selectDadosIdVencedor(idTreinador, rodada-1) , rodada);
+            }
+            aux = listaTimes.get(0).getId();
+            nome1 = time.selectTimesNome(listaTimes.get(0).getId());
+            nome2 = time.selectTimesNome(d.selectDadosIdVencedor(idTreinador, rodada-1));
+            stringRodada = "Final";
+        } else if(rodada > 11){
+            nome1 = null;
+            nome2 = null;
+            stringRodada = null;
+            this.setVisible(false);
+            Final janelaFinal = new Final();
+            janelaFinal.setLocationRelativeTo(null);
+            janelaFinal.setVisible(true);
+            janelaFinal.recebeDados(idTreinador,rodada,listaTimes.get(0).getId(),d.selectDadosIdVencedor(idTreinador, rodada-2));
+            
+            
+        } else {
+            nome1 = time.selectTimesNome(partida.getIdTime1());
+            nome2 = time.selectTimesNome(partida.getIdTime2());
+            stringRodada = "Rodada "+rodada;
+        }
+        
+        
+        String match = nome1 + " x " + nome2; 
+        
         
         jLabel1.setText(nomeTime);
         jLabel1.setBackground(corFundo);
         jLabel1.setOpaque(true);
         jLabel1.setForeground(corTexto);
         jLabel2.setText(nomeTreinador);
+        jLabel4.setText(match);
+        jLabel5.setText(stringRodada);
+        
+        
        
         Players player = new Players();
-        Map<String,Players> players = player.selectPlayers(conexaoSQLite, statement, resultSet, idTime);
+        Map<String,Players> players = player.selectPlayers(idTime);
         DefaultTableModel table = (DefaultTableModel)jTable1.getModel();
         
         for (int i = 1; i <= 5; i++) {
@@ -189,12 +405,33 @@ public class Principal extends javax.swing.JFrame {
         }
         
         
+       
+        
+        
+        p.setIdTime1(idTime);
+        p.setIdTreinador(idTreinador);
+        p.setRodada(rodada);
+        p.setIdTime2(aux);
+        
         }
+        
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+   
 }
